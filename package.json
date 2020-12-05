@@ -5,6 +5,8 @@
    "devDependencies": {
       "@types/jest": "^26.0.16",
       "@types/node": "^14.14.10",
+      "@types/redis": "^2.8.28",
+      "@types/uuid": "^8.3.0",
       "concurrently": "^5.3.0",
       "graphql-request": "^3.3.0",
       "jest": "^26.6.3",
@@ -16,21 +18,25 @@
    "dependencies": {
       "apollo-server-express": "^2.19.0",
       "argon2": "^0.27.0",
+      "axios": "^0.21.0",
       "class-validator": "^0.12.2",
       "dotenv": "^8.2.0",
       "express": "^4.17.1",
       "graphql": "^15.4.0",
       "pg": "^8.4.0",
+      "redis": "^3.0.2",
       "reflect-metadata": "^0.1.10",
       "type-graphql": "^1.1.1",
-      "typeorm": "0.2.29"
+      "typeorm": "0.2.29",
+      "uuid": "^8.3.1"
    },
    "scripts": {
-      "start": "ts-node src/index.ts",
-      "test": "NODE_ENV=test jest",
-      "server": "NODE_ENV=development nodemon dist/index.js",
+      "start": "node dist/index.js",
+      "redis": "redis-server",
       "watch": "tsc -w",
-      "dev": "concurrently \"yarn watch\" \"yarn server\" "
+      "server": "NODE_ENV=development  nodemon dist/index.js yarn redis ",
+      "dev": "concurrently \"yarn redis\" \"yarn watch\" \"yarn server\" ",
+      "test": "NODE_ENV=test concurrently \"yarn redis\"  \"jest --watch --detectOpenHandles\" "
    },
    "license": "MIT"
 }

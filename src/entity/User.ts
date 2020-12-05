@@ -8,6 +8,7 @@ import {
 import { hash } from 'argon2';
 import { IsEmail, Length } from 'class-validator';
 import { Field, ObjectType } from 'type-graphql';
+import { invalidEmail, passwordNotLongEnough } from '../errorMessages';
 
 @ObjectType()
 @Entity('users')
@@ -18,14 +19,17 @@ export class User extends BaseEntity {
 
   @Field()
   @Column({ unique: true })
-  @IsEmail({}, { message: 'Invalid Email Address' })
+  @IsEmail({}, { message: invalidEmail })
   email: string;
 
   @Column('text')
   @Length(6, undefined, {
-    message: 'Password must be atleast 6 characters long',
+    message: passwordNotLongEnough,
   })
   password: string;
+
+  @Column({ default: false })
+  confirmed: boolean;
 
   @BeforeInsert()
   async hashPassword() {

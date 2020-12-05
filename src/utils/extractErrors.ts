@@ -1,5 +1,5 @@
 import { ValidationError } from 'class-validator';
-import { FieldError } from 'src/types';
+import { FieldError } from '../types';
 
 export const extractErrors = (errors: ValidationError[]) => {
   let formatedErrors: FieldError[] = [];
